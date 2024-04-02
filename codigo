@@ -1,0 +1,83 @@
+def main():
+    while True:
+        # Estrutura de dados
+        jogo = [[' ' for _ in range(3)] for _ in range(3)]
+        jogador = 1
+        ganhou = False
+        jogadas = 0
+
+        while not ganhou and jogadas < 9:
+            # Imprimir jogo
+            print("\n\n\t 0   1   2\n\n")
+            for l in range(3):
+                for c in range(3):
+                    if c == 0:
+                        print("\t", end="")
+                    print(" {} ".format(jogo[l][c]), end="")
+                    if c < 2:
+                        print("|", end="")
+                if l < 2:
+                    print("\n\t-----------")
+
+            # Ler coordenadas
+            while True:
+                print("\nJOGADOR 1 = 0\nJOGADOR 2 = X\n")
+                print("\nJOGADOR {}: Digite a linha e a coluna que deseja jogar:".format(jogador))
+                l, coluna = map(int, input().split())
+                if 0 <= l < 3 and 0 <= coluna < 3 and jogo[l][coluna] == ' ':
+                    break
+
+            # Salvar coordenadas
+            if jogador == 1:
+                jogo[l][coluna] = '0'
+                jogador = 2
+            else:
+                jogo[l][coluna] = 'X'
+                jogador = 1
+            jogadas += 1
+
+            # Verificar vitória por linha
+            for l in range(3):
+                if jogo[l][0] == jogo[l][1] == jogo[l][2] != ' ':
+                    print("\nParabéns! O jogador {} venceu por linha!".format(jogo[l][0]))
+                    ganhou = True
+                    break
+
+            # Verificar vitória por coluna
+            for c in range(3):
+                if jogo[0][c] == jogo[1][c] == jogo[2][c] != ' ':
+                    print("\nParabéns! O jogador {} venceu por coluna!".format(jogo[0][c]))
+                    ganhou = True
+                    break
+
+            # Verificar vitória na diagonal principal
+            if jogo[0][0] == jogo[1][1] == jogo[2][2] != ' ':
+                print("\nParabéns! O jogador {} venceu na diagonal principal!".format(jogo[0][0]))
+                ganhou = True
+
+            # Verificar vitória na diagonal secundária
+            if jogo[0][2] == jogo[1][1] == jogo[2][0] != ' ':
+                print("\nParabéns! O jogador {} venceu na diagonal secundária!".format(jogo[0][2]))
+                ganhou = True
+
+        # Imprimir jogo final
+        print("\n\n\t 0   1   2\n\n")
+        for l in range(3):
+            for c in range(3):
+                if c == 0:
+                    print("\t", end="")
+                print(" {} ".format(jogo[l][c]), end="")
+                if c < 2:
+                    print("|", end="")
+            print("  ", l)
+            if l < 2:
+                print("\n\t-----------")
+        if not ganhou:
+            print("\nO jogo finalizou sem ganhador!\n")
+
+        opcao = int(input("\nDigite 1 para jogar novamente: "))
+        if opcao != 1:
+            break
+
+if __name__ == "__main__":
+    main()
